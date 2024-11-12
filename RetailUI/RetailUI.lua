@@ -112,7 +112,8 @@ local function Position_MicroMenuButtons()
 	--]]
 
 	CharacterMicroButton:ClearAllPoints();
-	CharacterMicroButton:SetPoint("BOTTOMRIGHT", MicroButtonAndBagsBar, "BOTTOMRIGHT", -185, 3.5)
+	local microOffset = -8 * 26 - 3
+	CharacterMicroButton:SetPoint("BOTTOMRIGHT", MicroButtonAndBagsBar, "BOTTOMRIGHT", microOffset, 3.5)
 
 	-- Latency indicator
 	MainMenuBarPerformanceBarFrame:SetFrameStrata("HIGH")
