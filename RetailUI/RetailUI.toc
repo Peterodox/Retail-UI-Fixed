@@ -5,6 +5,11 @@
 ## Notes: World of Warcraft Retail's UI, recreated for TBC. Includes additional features
 ## SavedVariables: RUI_SavedVars
 
+Patches\Patches.xml
+Locales\Locales.xml
+
 Embeds.xml
 
 RetailUI.lua
+
+Options\New_Settings.lua

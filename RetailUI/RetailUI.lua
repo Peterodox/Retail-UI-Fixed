@@ -146,7 +146,7 @@ BagSpaceDisplay.Text:SetAllPoints(BagSpaceDisplay)
 local function UpdateBagSpace()
 	local totalFree, freeSlots, bagFamily = 0
 	for i = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
-		freeSlots, bagFamily = GetContainerNumFreeSlots(i)
+		freeSlots, bagFamily = C_Container.GetContainerNumFreeSlots(i)
 		if bagFamily == 0 then
 			totalFree = totalFree + freeSlots
 		end
@@ -496,13 +496,13 @@ hooksecurefunc("MainMenuTrackingBar_Configure", Update_StatusBars)
 
 -- Disallow Pet Action Bar offset if player is at max level
 local function PetActionBar_DisallowMaxLevelOffset()
-	UIPARENT_MANAGED_FRAME_POSITIONS.PETACTIONBAR_YPOS.maxLevel = 0
+	UIPARENT_MANAGED_FRAME_POSITIONS.PETACTIONBAR_YOFFSET.maxLevel = 0
 end
 
 -- Disallow Pet Action Bar offset if the reputation watch bar is shown
 -- NOTE: Unsafe to call in combat
 local function PetActionBar_DisallowReputationOffset()
-	UIPARENT_MANAGED_FRAME_POSITIONS.PETACTIONBAR_YPOS.watchBar = 0
+	UIPARENT_MANAGED_FRAME_POSITIONS.PETACTIONBAR_YOFFSET.watchBar = 0
 end
 
 local function SetYOffset(Frame, yOffset)
@@ -553,8 +553,8 @@ f:SetScript("OnEvent", PlayerLogin)
 
 local function ShowAsExperienceBarCheckbox_Disable()
 	ReputationDetailMainScreenCheckBox:Disable()
-	ReputationDetailMainScreenCheckBoxText:SetTextColor(0.5, 0.5, 0.5)
-	ReputationDetailMainScreenCheckBoxText:SetText("(Can't toggle in combat)")
+	ReputationDetailMainScreenCheckboxText:SetTextColor(0.5, 0.5, 0.5)
+	ReputationDetailMainScreenCheckboxText:SetText("(Can't toggle in combat)")
 end
 
 local function ActionBarCheckboxes_Disable()
@@ -576,12 +576,12 @@ local f = CreateFrame("Frame")
 f:RegisterEvent("PLAYER_REGEN_DISABLED")
 f:SetScript("OnEvent", PlayerEnteredCombat)
 
-local ShowAsExperienceBarCheckbox_Text = ReputationDetailMainScreenCheckBoxText:GetText()
+local ShowAsExperienceBarCheckbox_Text = ReputationDetailMainScreenCheckboxText:GetText()
 
 local function ShowAsExperienceBarCheckbox_Enable()
 	ReputationDetailMainScreenCheckBox:Enable()
-	ReputationDetailMainScreenCheckBoxText:SetTextColor(1, 0.82, 0)
-	ReputationDetailMainScreenCheckBoxText:SetText(
+	ReputationDetailMainScreenCheckboxText:SetTextColor(1, 0.82, 0)
+	ReputationDetailMainScreenCheckboxText:SetText(
 		ShowAsExperienceBarCheckbox_Text
 	)
 end

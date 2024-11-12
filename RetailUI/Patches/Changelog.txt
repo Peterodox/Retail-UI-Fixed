@@ -1,0 +1,4 @@
+- InterfaceOptionFrame is revamped in Dragonflight.
+- Blizzard_BindingUI revamped.
+- CheckBox renamed to Checkbox (lower case)
+- FocusFrame not loaded

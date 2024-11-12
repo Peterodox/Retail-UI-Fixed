@@ -1,7 +1,9 @@
 <Ui>
-
   <!-- Initialization -->
   <Include file="Init.lua" />
+
+  <!-- Saved variables -->
+  <Script file="SavedVariables.lua" />
 
   <!-- Art -->
   <Include file="Art\ArtFrames.xml" />
@@ -17,8 +19,4 @@
   <Include file="Options\OptionsFrame.xml" />
   <Include file="Options\OptionsFramePanels.xml" />
   <Include file="Options\Options.lua" />
-
-  <!-- Saved variables -->
-  <Script file="SavedVariables.lua" />
-
 </Ui>

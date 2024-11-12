@@ -1,5 +1,8 @@
+local _, addon = ...
+local GetDBBool = addon.GetDBBool
+
 local function Gryphons_Update()
-	if RUI_SavedVars.Options.Components.Gryphons then
+	if GetDBBool("Components_Gryphons") then
 		MainMenuBarLeftEndCap:Show()
 		MainMenuBarRightEndCap:Show()
 	else
@@ -9,7 +12,7 @@ local function Gryphons_Update()
 end
 
 local function Update_KeyRing()
-	if RUI_SavedVars.Options.Components.Bags then
+	if GetDBBool("Components_Bags") then
 		KeyRingButton:Show()
 	else
 		KeyRingButton:Hide()
@@ -18,7 +21,7 @@ end
 hooksecurefunc("MainMenuBar_UpdateKeyRing", Update_KeyRing)
 
 local function Bags_Update()
-	if RUI_SavedVars.Options.Components.Bags then
+	if GetDBBool("Components_Bags") then
 		MainMenuBarBackpackButton:Show()
 		for i = 0, 3 do
 			_G["CharacterBag" .. i .. "Slot"]:Show()
@@ -33,7 +36,7 @@ local function Bags_Update()
 end
 
 local function BagSpaceText_Update()
-	if RUI_SavedVars.Options.Components.BagSpaceText then
+	if GetDBBool("Components_BagSpaceText") then
 		BagSpaceDisplay:Show()
 	else
 		BagSpaceDisplay:Hide()
@@ -41,7 +44,7 @@ local function BagSpaceText_Update()
 end
 
 local function MicroMenu_Update()
-	if RUI_SavedVars.Options.Components.MicroMenu then
+	if GetDBBool("Components_MicroMenu") then
 		for i = 1, #MICRO_BUTTONS do
 			_G[MICRO_BUTTONS[i]]:Show()
 		end
@@ -55,7 +58,7 @@ local function MicroMenu_Update()
 end
 
 local function MicroAndBagsBackground_Update()
-	if RUI_SavedVars.Options.Components.MicroAndBagsBackground then
+	if GetDBBool("Components_MicroAndBagsBackground") then
 		MicroButtonAndBagsBar:Show()
 	else
 		MicroButtonAndBagsBar:Hide()
@@ -67,3 +70,10 @@ RetailUI.Bags_Update = Bags_Update
 RetailUI.BagSpaceText_Update = BagSpaceText_Update
 RetailUI.MicroMenu_Update = MicroMenu_Update
 RetailUI.MicroAndBagsBackground_Update = MicroAndBagsBackground_Update
+
+
+addon.CallbackRegistry:Register("SettingChanged.Components_Gryphons", Gryphons_Update)
+addon.CallbackRegistry:Register("SettingChanged.Components_Bags", Bags_Update)
+addon.CallbackRegistry:Register("SettingChanged.Components_BagSpaceText", BagSpaceText_Update)
+addon.CallbackRegistry:Register("SettingChanged.Components_MicroMenu", MicroMenu_Update)
+addon.CallbackRegistry:Register("SettingChanged.Components_MicroAndBagsBackground", MicroAndBagsBackground_Update)

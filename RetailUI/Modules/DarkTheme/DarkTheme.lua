@@ -1,7 +1,8 @@
-local addonName, addonTable = ...
-local GetMacroFrameTextures = addonTable.Modules.DarkTheme.GetMacroFrameTextures
-local GetKeyBindingFrameTextures = addonTable.Modules.DarkTheme.GetKeyBindingFrameTextures
-local GetGeneralTextures = addonTable.Modules.DarkTheme.GetGeneralTextures
+local _, addon = ...
+local GetDBBool = addon.GetDBBool
+local GetMacroFrameTextures = addon.Modules.DarkTheme.GetMacroFrameTextures
+local GetKeyBindingFrameTextures = addon.Modules.DarkTheme.GetKeyBindingFrameTextures
+local GetGeneralTextures = addon.Modules.DarkTheme.GetGeneralTextures
 
 local colorLight = { r = 1, g = 1, b = 1 }
 local colorDark = { r = 0.4, g = 0.4, b = 0.4 }
@@ -54,7 +55,7 @@ local function SetCustomBackpackTextures(frame, size, id)
 	local backpackId = 0
 
 	if id == backpackId then
-		if RUI_SavedVars.Options.DarkTheme then
+		if GetDBBool("DarkTheme") then
 			_G[frameName .. "Portrait"]:ClearAllPoints()
 			_G[frameName .. "Portrait"]:SetPoint("TOPLEFT", frameName, "TOPLEFT", 5, -3)
 			_G[frameName .. "BackgroundTop"]:SetTexture("Interface\\AddOns\\RetailUI\\art\\UI-BackpackBackground")
@@ -81,12 +82,12 @@ local function DarkTheme_KeyBindingFrame_Update()
 	local regularTextures = GetKeyBindingFrameTextures()
 	SetVertexColors(regularTextures, color.r, color.g, color.b)
 end
-KeyBindingFrame:HookScript("OnShow", DarkTheme_KeyBindingFrame_Update)
+--KeyBindingFrame:HookScript("OnShow", DarkTheme_KeyBindingFrame_Update)
 
 local function DarkTheme_Update()
 	MerchantBuyBackItemItemButtonNormalTexture:Hide()
 
-	if RUI_SavedVars.Options.DarkTheme then
+	if GetDBBool("DarkTheme") then
 		color = colorDark
 		desaturation = desaturationEnabled
 		-- Raid frame manager toggle button texture
@@ -119,17 +120,36 @@ local function DarkTheme_Update()
 	end
 end
 
-GameMenuFrame:HookScript("OnShow", DarkTheme_Update)
-InterfaceOptionsFrame:HookScript("OnShow", DarkTheme_Update)
-VideoOptionsFrame:HookScript("OnShow", DarkTheme_Update)
-StaticPopup1:HookScript("OnShow", DarkTheme_Update)
-StaticPopup2:HookScript("OnShow", DarkTheme_Update)
-StaticPopup3:HookScript("OnShow", DarkTheme_Update)
-StaticPopup4:HookScript("OnShow", DarkTheme_Update)
-hooksecurefunc("ContainerFrame_Update", DarkTheme_Update)
+
+local HookOnShowObjects = {
+	"GameMenuFrame", "StaticPopup1", "StaticPopup2", "StaticPopup3", "StaticPopup4",
+	--"InterfaceOptionsFrame", "VideoOptionsFrame",
+}
+
+local HookFunctions = {
+	"ContainerFrame_Update",
+}
+
+for _, name in ipairs(HookOnShowObjects) do
+	local obj = _G[name];
+	if obj then
+		obj:HookScript("OnShow", DarkTheme_Update)
+	end
+end
+
+for _, name in ipairs(HookFunctions) do
+	local obj = _G[name];
+	if obj and type(obj) == "function" then
+		hooksecurefunc(name, DarkTheme_Update)
+	end
+end
+
+
 local f = CreateFrame("Frame")
 f:RegisterEvent("DISPLAY_SIZE_CHANGED")
 f:RegisterEvent("SPELL_UPDATE_USABLE")
 f:SetScript("OnEvent", DarkTheme_Update)
 
 RetailUI.DarkTheme_Update = DarkTheme_Update
+
+addon.CallbackRegistry:Register("SettingChanged.DarkTheme", DarkTheme_Update)

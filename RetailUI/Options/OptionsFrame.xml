@@ -72,7 +72,7 @@
       <Anchors>
         <Anchor point="BOTTOMRIGHT">
           <Offset>
-            <AbsDimension x="-16" y="14"/>
+            <AbsDimension x="-16" y="16"/>
           </Offset>
         </Anchor>
       </Anchors>
@@ -84,39 +84,6 @@
         </OnClick>
       </Scripts>
     </Button>
-
-    <Frame name="$parentPanelContainer">
-      <Anchors>
-        <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent">
-          <Offset>
-            <AbsDimension x="22" y="-40"/>
-          </Offset>
-        </Anchor>
-        <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent">
-          <Offset>
-            <AbsDimension x="22" y="50"/>
-          </Offset>
-        </Anchor>
-        <Anchor point="RIGHT">
-          <Offset>
-            <AbsDimension x="-22" y="0"/>
-          </Offset>
-        </Anchor>
-      </Anchors>
-      <Scripts>
-        <OnLoad>
-          Mixin(self, BackdropTemplateMixin)
-          self:SetBackdrop({
-            edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
-            tile = true,
-            tileSize = 16,
-            edgeSize = 16,
-            insets = {left = 5, right = 5, top = 5, bottom = 5},
-          })
-          self:SetBackdropBorderColor(.6,.6,.6,1)
-        </OnLoad>
-      </Scripts>
-    </Frame>
   </Frames>
 </Frame>
 
