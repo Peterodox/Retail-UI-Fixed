@@ -21,6 +21,7 @@ local DefaultValues = {
 
 local CustomCommand = {
 	"XPBarTextScale",
+	"ChatFontSize",
 }
 
 local function UpdateAllModules()
@@ -47,14 +48,13 @@ local function SavedVariables_Load()
 		end
 	end
 
-	UpdateAllModules();
+	UpdateAllModules()
 end
 
 local function LoadCustomCommand()
-	local db = RUI_SavedVars or {}
 	for _, dbKey in ipairs(CustomCommand) do
-		if db[dbKey] ~= nil then
-			CallbackRegistry:Trigger("Custom."..dbKey, db[dbKey]);
+		if OptionDB[dbKey] ~= nil then
+			CallbackRegistry:Trigger("Custom."..dbKey, OptionDB[dbKey])
 		end
 	end
 end
@@ -70,7 +70,10 @@ local function SavedVariables_Init()
 		RUI_SavedVars.Options = {}
 	end
 	SavedVariables_Load()
-	LoadCustomCommand()
+
+	C_Timer.After(0, function()
+		LoadCustomCommand()
+	end)
 end
 
 local function ResetSettings()
@@ -80,7 +83,7 @@ local function ResetSettings()
 
 	UpdateAllModules()
 end
-addon.ResetSettings = ResetSettings;
+addon.ResetSettings = ResetSettings
 
 local function GetDBBool(dbKey)
 	return OptionDB[dbKey] or false
@@ -89,7 +92,7 @@ addon.GetDBBool = GetDBBool
 
 local function SetDBValue(dbKey, value, userInput)
 	OptionDB[dbKey] = value
-	CallbackRegistry:Trigger("SettingChanged."..dbKey, value, userInput);
+	CallbackRegistry:Trigger("SettingChanged."..dbKey, value, userInput)
 end
 addon.SetDBValue = SetDBValue
 
@@ -98,7 +101,7 @@ addon.SetDBValue = SetDBValue
 local function AddonLoaded(self, event, name)
 	if name == addonName then
 		SavedVariables_Init()
-		self:UnregisterEvent(event);
+		self:UnregisterEvent(event)
 	end
 end
 local f = CreateFrame("Frame")
@@ -110,16 +113,46 @@ f:SetScript("OnEvent", AddonLoaded)
 
 do	--Custom Command
 	local function XPBarTextScale(value)
+		if not value then
+			value = 1
+		end
 		local fontString = addon.PatchAPI.GetGlobalObject("ReputationWatchBar.OverlayFrame.Text")
 		if fontString then
 			fontString:SetScale(value)
 		end
-		fontString = MainMenuBarExpText;
+		fontString = MainMenuBarExpText
 		if fontString then
 			fontString:SetScale(value)
 		end
 	end
-	CallbackRegistry:Register("Custom.XPBarTextScale", XPBarTextScale);
+	CallbackRegistry:Register("Custom.XPBarTextScale", XPBarTextScale)
 
-	RUI_SetXPBarTextScale = XPBarTextScale
+	RUI_SetXPBarTextScale = function(value)
+		SetDBValue("XPBarTextScale", value)
+		XPBarTextScale(value)
+	end
+
+
+	local function SetChatFontSize(value)
+		if ChatFontNormal then
+			if not value then
+				value = 14
+			end
+			local font = ChatFontNormal:GetFont()
+			ChatFontNormal:SetFont(font, value, "")
+
+			for i = 1, 10 do
+				local obj = _G["ChatFrame"..i];
+				if obj and obj.SetFontObject then
+					obj:SetFontObject(ChatFontNormal)
+				end
+			end
+		end
+	end
+	CallbackRegistry:Register("Custom.ChatFontSize", SetChatFontSize)
+
+	RUI_ChatFontSize = function(value)
+		SetDBValue("ChatFontSize", value)
+		SetChatFontSize(value)
+	end
 end

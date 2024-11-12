@@ -99,16 +99,20 @@ local function Position_MicroMenuButtons()
 	end
 
 	-- MicroMenu button Positions
-	for i = 1, #MICRO_BUTTONS do
-		local button, previousButton = _G[MICRO_BUTTONS[i]], _G[MICRO_BUTTONS[i-1]]
-		button:ClearAllPoints()
+	--for i = 1, #MICRO_BUTTONS do
+	--	local button, previousButton = _G[MICRO_BUTTONS[i]], _G[MICRO_BUTTONS[i-1]]
+	--	button:ClearAllPoints()
+	--
+	--	if i == 1 then
+	--		button:SetPoint("BOTTOMRIGHT", UIParent, -197, 3.5)
+	--	else
+	--		button:SetPoint("BOTTOMRIGHT", previousButton, 27.5, 0)
+	--	end
+	--end
+	--]]
 
-		if i == 1 then
-			button:SetPoint("BOTTOMRIGHT", UIParent, -197, 3.5)
-		else
-			button:SetPoint("BOTTOMRIGHT", previousButton, 27.5, 0)
-		end
-	end
+	CharacterMicroButton:ClearAllPoints();
+	CharacterMicroButton:SetPoint("BOTTOMRIGHT", MicroButtonAndBagsBar, "BOTTOMRIGHT", -185, 3.5)
 
 	-- Latency indicator
 	MainMenuBarPerformanceBarFrame:SetFrameStrata("HIGH")
@@ -206,8 +210,8 @@ local function Initial_ActionBarPositioning()
 		end
 
 		-- Key ring Scale and Position
-		KeyRingButton:SetScale(0.9)
-		KeyRingButton:SetPoint("RIGHT", CharacterBag3Slot, "LEFT", -5, -2)
+		KeyRingButton:SetScale(0.8)
+		KeyRingButton:SetPoint("RIGHT", CharacterBag3Slot, "LEFT", -3, -2)
 
 		-- Pet bar texture Position (Visibility when bottom left bar is hidden)
 		SlidingActionBarTexture0:SetPoint("TOPLEFT", PetActionBarFrame, 1, -5)

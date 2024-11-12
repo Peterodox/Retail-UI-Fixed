@@ -60,6 +60,9 @@ end
 local function MicroAndBagsBackground_Update()
 	if GetDBBool("Components_MicroAndBagsBackground") then
 		MicroButtonAndBagsBar:Show()
+		if MicroButtonAndBagsBarTexture then
+			MicroButtonAndBagsBarTexture:SetTexture("Interface/AddOns/RetailUI/Art/MicroButtonAndBagsBar.png")
+		end
 	else
 		MicroButtonAndBagsBar:Hide()
 	end
