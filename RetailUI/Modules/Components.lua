@@ -43,28 +43,27 @@ local function BagSpaceText_Update()
 	end
 end
 
-local function MicroMenu_Update()
+local function MicroMenu_Update(value, userInput)
+	--if true then return end
 	if GetDBBool("Components_MicroMenu") then
-		for i = 1, #MICRO_BUTTONS do
-			_G[MICRO_BUTTONS[i]]:Show()
-		end
+
 		MainMenuBarPerformanceBarFrame:Show()
-	else
-		for i = 1, #MICRO_BUTTONS do
-			_G[MICRO_BUTTONS[i]]:Hide()
+		if userInput then
+
+			UpdateMicroButtons()
 		end
+	else
+		CharacterMicroButton:ClearAllPoints();
+		CharacterMicroButton:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", 16, -16);
 		MainMenuBarPerformanceBarFrame:Hide()
 	end
 end
 
 local function MicroAndBagsBackground_Update()
 	if GetDBBool("Components_MicroAndBagsBackground") then
-		MicroButtonAndBagsBar:Show()
-		if MicroButtonAndBagsBarTexture then
-			MicroButtonAndBagsBarTexture:SetTexture("Interface/AddOns/RetailUI/Art/MicroButtonAndBagsBar.png")
-		end
+		RetailUIMicroButtonAndBagBar:Show()
 	else
-		MicroButtonAndBagsBar:Hide()
+		RetailUIMicroButtonAndBagBar:Hide()
 	end
 end
 

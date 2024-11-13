@@ -1,3 +1,7 @@
+local _, addon = ...
+local GetDBBool = addon.GetDBBool
+local _G = _G
+
 --------------------==≡≡[ CHAT WELCOME MESSAGE ]≡≡==-----------------------------------
 
 local icon = "ShipMissionIcon-Bonus-MapBadge"
@@ -91,42 +95,49 @@ f:SetScript("OnEvent", Minimap_EnableScrollZoom)
 --------------------==≡≡[ MICRO MENU ]≡≡==----------------------------------
 
 local function Position_MicroMenuButtons()
-	if UnitLevel("player") < SHOW_SPEC_LEVEL then
-		-- Disable button until player is high enough level
-		TalentMicroButton:Disable()
-	else
-		TalentMicroButton:Enable()
+	local numVisible = 0;
+	if MICRO_BUTTONS then
+		for _, name in ipairs(MICRO_BUTTONS) do
+			if _G[name] and _G[name]:IsShown() then
+				numVisible = numVisible + 1
+			end
+		end
 	end
 
-	-- MicroMenu button Positions
-	--for i = 1, #MICRO_BUTTONS do
-	--	local button, previousButton = _G[MICRO_BUTTONS[i]], _G[MICRO_BUTTONS[i-1]]
-	--	button:ClearAllPoints()
-	--
-	--	if i == 1 then
-	--		button:SetPoint("BOTTOMRIGHT", UIParent, -197, 3.5)
-	--	else
-	--		button:SetPoint("BOTTOMRIGHT", previousButton, 27.5, 0)
-	--	end
-	--end
-	--]]
+	if GetDBBool("Components_MicroAndBagsBackground") then
+		if numVisible < 8 then
+			numVisible = 8
+		end
+	end
+
+	local buttonWidth = 29;
+	local buttonOffset = -3;
+	local microOffset = (numVisible - 1) * (buttonWidth + buttonOffset) - buttonOffset
+
+	local container = RetailUIMicroButtonAndBagBar;
+	local barWidth = microOffset + 30;
+	container:SetWidth(barWidth);
 
 	CharacterMicroButton:ClearAllPoints();
-	local microOffset = -8 * 26 - 3
-	CharacterMicroButton:SetPoint("BOTTOMRIGHT", MicroButtonAndBagsBar, "BOTTOMRIGHT", microOffset, 3.5)
+	CharacterMicroButton:SetPoint("BOTTOMRIGHT", container, "BOTTOMRIGHT", -microOffset, 3.5)
 
 	-- Latency indicator
-	MainMenuBarPerformanceBarFrame:SetFrameStrata("HIGH")
-	MainMenuBarPerformanceBarFrame:SetScale((HelpMicroButton:GetWidth() / MainMenuBarPerformanceBarFrame:GetWidth()) * (1 / 3))
+	local f1 = MainMenuBarPerformanceBarFrame;
+	f1:SetFrameStrata("HIGH")
+	f1:SetScale((HelpMicroButton:GetWidth() / f1:GetWidth()) * (1 / 3))
 
-	MainMenuBarPerformanceBar:SetRotation(math.pi * 0.5)
-	MainMenuBarPerformanceBar:ClearAllPoints()
-	MainMenuBarPerformanceBar:SetPoint("BOTTOM", HelpMicroButton, -1, -24)
+	local f2 = MainMenuBarPerformanceBar;
+	f2:SetRotation(math.pi * 0.5)
+	f2:ClearAllPoints()
+	f2:SetPoint("BOTTOM", HelpMicroButton, -1, -24)
 
-	MainMenuBarPerformanceBarFrameButton:ClearAllPoints()
-	MainMenuBarPerformanceBarFrameButton:SetPoint("BOTTOMLEFT", MainMenuBarPerformanceBar, -(MainMenuBarPerformanceBar:GetWidth() / 2), 0)
-	MainMenuBarPerformanceBarFrameButton:SetPoint("TOPRIGHT", MainMenuBarPerformanceBar, MainMenuBarPerformanceBar:GetWidth() / 2, -28)
+	local f3 = MainMenuBarPerformanceBarFrameButton
+	f3:ClearAllPoints()
+	f3:SetPoint("BOTTOMLEFT", f2, -(f2:GetWidth() / 2), 0)
+	f3:SetPoint("TOPRIGHT", f2, f2:GetWidth() / 2, -28)
+	--]]
 end
+
 local function MicroMenu_Hook()
 	RetailUI:MicroMenu_Update()
 	Position_MicroMenuButtons()
@@ -136,6 +147,12 @@ hooksecurefunc("UpdateMicroButtons", MicroMenu_Hook)
 hooksecurefunc("MainMenuBarVehicleLeaveButton_Update", MicroMenu_Hook)
 
 
+local function MicroAndBagsBackground_Update(value, userInput)
+	if userInput then
+		Position_MicroMenuButtons()
+	end
+end
+addon.CallbackRegistry:Register("SettingChanged.Components_MicroAndBagsBackground", MicroAndBagsBackground_Update)
 
 --------------------------------==≡≡[ BAG SPACE TEXT ]≡≡==--------------------------------
 
@@ -194,7 +211,7 @@ local function Initial_ActionBarPositioning()
 		ActionBarDownButton:SetPoint("CENTER", ActionBarUpButton, "BOTTOM", 0, -3)
 
 		-- Backpack Position
-		MainMenuBarBackpackButton:SetPoint("BOTTOMRIGHT", MicroButtonAndBagsBar, -7, 47)
+		MainMenuBarBackpackButton:SetPoint("BOTTOMRIGHT", RetailUIMicroButtonAndBagBar, -7, 47)
 
 		-- Bag slots' Position and Scale
 		for i = 0, 3 do
@@ -212,7 +229,7 @@ local function Initial_ActionBarPositioning()
 
 		-- Key ring Scale and Position
 		KeyRingButton:SetScale(0.8)
-		KeyRingButton:SetPoint("RIGHT", CharacterBag3Slot, "LEFT", -3, -2)
+		KeyRingButton:SetPoint("RIGHT", CharacterBag3Slot, "LEFT", -4, -2)
 
 		-- Pet bar texture Position (Visibility when bottom left bar is hidden)
 		SlidingActionBarTexture0:SetPoint("TOPLEFT", PetActionBarFrame, 1, -5)

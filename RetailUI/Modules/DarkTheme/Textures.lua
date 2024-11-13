@@ -125,12 +125,14 @@ local regularTextureNames = {
 	"RetailUIArtFrame.BackgroundLarge",
 
 	-- Bags
-	"MicroButtonAndBagsBarTexture",
+	"RetailUIMicroButtonAndBagBar.Left",
+	"RetailUIMicroButtonAndBagBar.Center",
+	"RetailUIMicroButtonAndBagBar.Right",
 
 	-- Gryphons
 	"MainMenuBarLeftEndCap",
 	"MainMenuBarRightEndCap",
-	
+
 	-- Status bars
 	"RetailUIStatusBars.SingleBarSmallUpper",
 	"RetailUIStatusBars.SingleBarSmall",
@@ -271,7 +273,7 @@ local regularTextureNames = {
 	"StaticPopup1EditBoxRight",
 	"StaticPopup2EditBoxRight",
 	"StaticPopup3EditBoxRight",
-	"StaticPopup4EditBoxRight",		
+	"StaticPopup4EditBoxRight",
 
 	-- Interface options - Tab borders
 		--"InterfaceOptionsFrameTab1TabSpacer",

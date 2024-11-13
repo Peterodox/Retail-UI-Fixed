@@ -82,14 +82,35 @@
 </Frame>
 
 <!-- Micro button and bags bar background -->
-<Frame name="MicroButtonAndBagsBar" parent="UIParent">
+<Frame name="RetailUIMicroButtonAndBagBar" parent="UIParent">
     <Size x="512" y="128"/>
     <Anchors>
         <Anchor point="BOTTOMRIGHT"/>
     </Anchors>
     <Layers>
         <Layer level="BACKGROUND">
-            <Texture name="$parentTexture" file="Interface/AddOns/RetailUI/art/MicroMenuArt"/>
+            <Texture parentKey="Right" file="Interface/AddOns/RetailUI/Art/MicroButtonAndBagsBar.png">
+                <TexCoords left="0.609375" right="1" top="0" bottom="1"/>
+                <Size x="200" y="128"/>
+                <Anchors>
+                    <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT"/>
+                </Anchors>
+            </Texture>
+            <Texture parentKey="Left" file="Interface/AddOns/RetailUI/Art/MicroButtonAndBagsBar.png" hidden="false">
+                <TexCoords left="0.4375" right="0.46875" top="0" bottom="1"/>
+                <Size x="16" y="128"/>
+                <Anchors>
+                    <Anchor point="BOTTOMLEFT" relativeKey="$parent" relativePoint="BOTTOMLEFT" x="-6"/>
+                </Anchors>
+            </Texture>
+            <Texture parentKey="Center" file="Interface/AddOns/RetailUI/Art/MicroButtonAndBagsBar.png" hidden="false">
+                <TexCoords left="0.46875" right="0.609375" top="0" bottom="1"/>
+                <Size x="60" y="128"/>
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeKey="$parent.Left" relativePoint="TOPRIGHT"/>
+                    <Anchor point="BOTTOMRIGHT" relativeKey="$parent.Right" relativePoint="BOTTOMLEFT"/>
+                </Anchors>
+            </Texture>
         </Layer>
     </Layers>
 </Frame>
