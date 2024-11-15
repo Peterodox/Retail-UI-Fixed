@@ -573,6 +573,8 @@ local f = CreateFrame("Frame")
 f:RegisterEvent("PLAYER_LOGIN")
 f:SetScript("OnEvent", PlayerLogin)
 
+
+--[[
 local function ShowAsExperienceBarCheckbox_Disable()
 	ReputationDetailMainScreenCheckBox:Disable()
 	ReputationDetailMainScreenCheckboxText:SetTextColor(0.5, 0.5, 0.5)
@@ -630,3 +632,4 @@ end
 local f = CreateFrame("Frame")
 f:RegisterEvent("PLAYER_REGEN_ENABLED")
 f:SetScript("OnEvent", PlayerLeftCombat)
+--]]
