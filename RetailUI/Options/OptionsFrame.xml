@@ -37,7 +37,6 @@
       PlaySound(89) --GAMEDIALOGCLOSE
     </OnHide>
   </Scripts>
-  <TitleRegion setAllPoints="true"/>
   <Layers>
     <Layer level="ARTWORK">
       <Texture file="Interface\DialogFrame\UI-DialogBox-Header" name="$parentHeader">
