@@ -17,6 +17,8 @@ local DefaultValues = {
 	Components_BagSpaceText = true,
 	Components_MicroMenu = true,
 	Components_MicroAndBagsBackground = true,
+	Tooltip_SelfAuraSpellID = true,
+	Tooltip_TargetAuraSpellID = false,
 }
 
 local CustomCommand = {
@@ -35,6 +37,17 @@ local function UpdateAllModules()
 	RetailUI:MicroAndBagsBackground_Update()
 end
 
+local function GetDBBool(dbKey)
+	return OptionDB[dbKey] or false
+end
+addon.GetDBBool = GetDBBool
+
+local function SetDBValue(dbKey, value, userInput)
+	OptionDB[dbKey] = value
+	CallbackRegistry:Trigger("SettingChanged."..dbKey, value, userInput)
+end
+addon.SetDBValue = SetDBValue
+
 local function SavedVariables_Load()
 	local db = RUI_SavedVars or {}
 	if not db.Options then
@@ -46,6 +59,10 @@ local function SavedVariables_Load()
 		if OptionDB[dbKey] == nil or type(OptionDB[dbKey]) ~= type(value) then
 			OptionDB[dbKey] = value
 		end
+	end
+
+	for dbKey, value in pairs(OptionDB) do
+		SetDBValue(dbKey, value)
 	end
 
 	UpdateAllModules()
@@ -84,17 +101,6 @@ local function ResetSettings()
 	UpdateAllModules()
 end
 addon.ResetSettings = ResetSettings
-
-local function GetDBBool(dbKey)
-	return OptionDB[dbKey] or false
-end
-addon.GetDBBool = GetDBBool
-
-local function SetDBValue(dbKey, value, userInput)
-	OptionDB[dbKey] = value
-	CallbackRegistry:Trigger("SettingChanged."..dbKey, value, userInput)
-end
-addon.SetDBValue = SetDBValue
 
 -- This event fires whenever an addon has finished loading and the
 -- SavedVariables for that addon have been loaded from their file
@@ -142,7 +148,7 @@ do	--Custom Command
 			ChatFontNormal:SetFont(font, value, "")
 
 			for i = 1, 10 do
-				local obj = _G["ChatFrame"..i];
+				local obj = _G["ChatFrame"..i]
 				if obj and obj.SetFontObject then
 					obj:SetFontObject(ChatFontNormal)
 				end

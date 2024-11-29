@@ -15,6 +15,8 @@ local Schematic = {
                 {type = "Checkbox", name = L["Tidy Icons"], tooltip = L["Tidy Icons Tooltip"], dbKey = "TidyIcons"},
                 {type = "Checkbox", name = L["Dark Theme"], tooltip = L["Dark Theme Tooltip"], dbKey = "DarkTheme"},
                 {type = "Checkbox", name = L["Show XP Text"], tooltip = L["Show XP Text Tooltip"], cvar = "xpBarText"},
+                {type = "Checkbox", name = L["Tooltip Show Self Aura Spell ID"], dbKey = "Tooltip_SelfAuraSpellID"},
+                {type = "Checkbox", name = L["Tooltip Show Target Aura Spell ID"], dbKey = "Tooltip_TargetAuraSpellID"},
             },
         },
 

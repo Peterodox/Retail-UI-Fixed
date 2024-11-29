@@ -14,7 +14,8 @@ L["Dark Theme"] = "Dark Theme"
 L["Dark Theme Tooltp"] = "Toggles dark theme."
 L["Show XP Text"] = "Always Show Experience Bar Text |cffaaaaaa(requires reload)"
 L["Show XP Text Tooltip"] = "Always show the text on your experience bar."
-
+L["Tooltip Show Self Aura Spell ID"] = "Show Your Own Buff/Debuff's Spell ID on Tooltip";
+L["Tooltip Show Target Aura Spell ID"] = "Show the Target's Buff/Debuff's Spell ID on Tooltip";
 
 L["Keybind Text"] = "Keybind Text"
 L["Format Toggle Keybind Text"] = "Toggles the keybind text on %s."
