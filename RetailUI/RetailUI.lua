@@ -4,9 +4,11 @@ local _G = _G
 
 --------------------==≡≡[ CHAT WELCOME MESSAGE ]≡≡==-----------------------------------
 
+--[[
 local icon = "ShipMissionIcon-Bonus-MapBadge"
 local welcomeMessage = "|cfff8e928Retail UI: |cffffffffType /rui to toggle the options menu."
 print(CreateAtlasMarkup(icon, 16, 16), welcomeMessage)
+--]]
 
 
 

@@ -2,7 +2,7 @@
 ## Title: Retail UI
 ## Author: sebast_ian
 ## Version: 3.0.4
-## Notes: Provides a compact replacement action bars with many features.|n|cff959595Slash command: /Rui|r
+## Notes: Provides a compact replacement action bars with many features.|n|cff959595Slash command: /rui|r
 ## SavedVariables: RUI_SavedVars
 
 Patches\Patches.xml
