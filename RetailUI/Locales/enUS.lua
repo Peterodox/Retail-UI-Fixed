@@ -12,10 +12,14 @@ L["Tidy Icons"] = "Tidy Icons"
 L["Tidy Icons Tooltip"] = "Tidies up the actionbar and macro button icons by trimming default icon borders."
 L["Dark Theme"] = "Dark Theme"
 L["Dark Theme Tooltp"] = "Toggles dark theme."
-L["Show XP Text"] = "Always Show Experience Bar Text |cffaaaaaa(requires reload)"
+L["Show XP Text"] = "Experience Bar Text"
 L["Show XP Text Tooltip"] = "Always show the text on your experience bar."
-L["Tooltip Show Self Aura Spell ID"] = "Show Your Own Buff/Debuff's Spell ID on Tooltip";
-L["Tooltip Show Target Aura Spell ID"] = "Show the Target's Buff/Debuff's Spell ID on Tooltip";
+
+L["Enhancements"] = "Enhancements"
+L["Tooltip Show Self Aura Spell ID"] = "Own Aura's Spell ID on Tooltip"
+L["Tooltip Show Target Aura Spell ID"] = "Target's Aura's Spell ID on Tooltip"
+L["PaperDoll Item Level"] = "Charcter Panel: Item Level"
+L["PaperDoll Quality Color"] = "Charcter Panel: Quality Color"
 
 L["Keybind Text"] = "Keybind Text"
 L["Format Toggle Keybind Text"] = "Toggles the keybind text on %s."

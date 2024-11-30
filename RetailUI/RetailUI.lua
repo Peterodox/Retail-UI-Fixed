@@ -88,22 +88,93 @@ local function Minimap_EnableScrollZoom()
 		end
 	end)
 end
-local f = CreateFrame("Frame")
-f:RegisterEvent("ADDON_LOADED")
-f:SetScript("OnEvent", Minimap_EnableScrollZoom)
+addon.CallbackRegistry:Register("AddOnLoadingComplete", Minimap_EnableScrollZoom)
 
 
 
 --------------------==≡≡[ MICRO MENU ]≡≡==----------------------------------
+local LFGMicroButton
+
+local function ModifyLFGMinimapButton()
+	local f = LFGMinimapFrame
+
+	if f and f:IsShown() then
+		if LFGMinimapFrameBorder then
+			LFGMinimapFrameBorder:SetTexture(nil)
+		end
+
+		if not LFGMicroButton then
+			local function LoadMicroButtonTextures(self)
+				self:RegisterForClicks("LeftButtonUp")
+				local prefix = "Interface\\Buttons\\UI-MicroButton"
+				local name = "character"
+				self:SetNormalTexture(prefix..name.."-Up")
+				self:SetHighlightTexture("Interface\\Buttons\\UI-MicroButton-Hilight")
+			end
+
+			LFGMicroButton = CreateFrame("Button", "RetailUILGFMicroButton", UIParent, "MainMenuBarMicroButton")
+			LFGMicroButton:ClearAllPoints()
+			LFGMicroButton:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
+			LoadMicroButtonTextures(LFGMicroButton)
+			LFGMicroButton:SetScript("OnClick", nil)
+			LFGMicroButton:SetScript("OnDisable", nil)
+			LFGMicroButton:SetHitRectInsets(14, 14, 28, 28)
+
+			f:SetFrameLevel(LFGMicroButton:GetFrameLevel() + 10)
+			f:ClearAllPoints()
+			f:SetParent(UIParent)
+
+			local offsetY = -11
+			f:SetPoint("CENTER", LFGMicroButton, "CENTER", 0, offsetY)
+
+			f:HookScript("OnMouseDown", function()
+				LFGMicroButton:SetNormalTexture("Interface\\Buttons\\UI-MicroButtonCharacter-Down")
+			end)
+
+			f:HookScript("OnMouseUp", function()
+				LFGMicroButton:SetNormalTexture("Interface\\Buttons\\UI-MicroButtonCharacter-Up")
+			end)
+
+			f:HookScript("OnEnter", function()
+				LFGMicroButton:LockHighlight()
+			end)
+
+			f:HookScript("OnLeave", function()
+				LFGMicroButton:UnlockHighlight()
+			end)
+
+			f:ClearHighlightTexture()
+		end
+
+		LFGMicroButton:Show()
+
+		return LFGMicroButton
+	else
+		if LFGMicroButton then
+			LFGMicroButton:Hide()
+		end
+	end
+end
 
 local function Position_MicroMenuButtons()
-	local numVisible = 0;
+	local numVisible = 0
+	local lastMicroButton
+
 	if MICRO_BUTTONS then
 		for _, name in ipairs(MICRO_BUTTONS) do
-			if _G[name] and _G[name]:IsShown() then
+			local microButton = _G[name]
+			if microButton and microButton:IsShown() then
 				numVisible = numVisible + 1
+				lastMicroButton = microButton
 			end
 		end
+	end
+
+	local LFGButton = ModifyLFGMinimapButton()
+	if LFGButton and lastMicroButton then
+		numVisible = numVisible + 1
+		LFGButton:ClearAllPoints()
+		LFGButton:SetPoint("BOTTOMLEFT", lastMicroButton, "BOTTOMRIGHT", -3, 0)
 	end
 
 	if GetDBBool("Components_MicroAndBagsBackground") then
@@ -112,23 +183,23 @@ local function Position_MicroMenuButtons()
 		end
 	end
 
-	local buttonWidth = 29;
-	local buttonOffset = -3;
+	local buttonWidth = 29
+	local buttonOffset = -3
 	local microOffset = (numVisible - 1) * (buttonWidth + buttonOffset) - buttonOffset
 
-	local container = RetailUIMicroButtonAndBagBar;
-	local barWidth = microOffset + 30;
-	container:SetWidth(barWidth);
+	local container = RetailUIMicroButtonAndBagBar
+	local barWidth = microOffset + 30
+	container:SetWidth(barWidth)
 
-	CharacterMicroButton:ClearAllPoints();
+	CharacterMicroButton:ClearAllPoints()
 	CharacterMicroButton:SetPoint("BOTTOMRIGHT", container, "BOTTOMRIGHT", -microOffset, 3.5)
 
 	-- Latency indicator
-	local f1 = MainMenuBarPerformanceBarFrame;
+	local f1 = MainMenuBarPerformanceBarFrame
 	f1:SetFrameStrata("HIGH")
 	f1:SetScale((HelpMicroButton:GetWidth() / f1:GetWidth()) * (1 / 3))
 
-	local f2 = MainMenuBarPerformanceBar;
+	local f2 = MainMenuBarPerformanceBar
 	f2:SetRotation(math.pi * 0.5)
 	f2:ClearAllPoints()
 	f2:SetPoint("BOTTOM", HelpMicroButton, -1, -24)

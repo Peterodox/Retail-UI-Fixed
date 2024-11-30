@@ -15,6 +15,7 @@
   <Script file="Modules\KeybindText.lua" />
   <Script file="Modules\TidyIcons.lua" />
   <Script file="Modules\Tooltip.lua"/>
+  <Script file="Modules\PaperDoll.lua"/>
 
   <!-- Options -->
   <Include file="Options\OptionsFrame.xml" />

@@ -10,13 +10,22 @@ local Schematic = {
     sectors = {
         {
             header = nil,
-            sideBySide = false,
+            sideBySide = true,
             widgets = {
                 {type = "Checkbox", name = L["Tidy Icons"], tooltip = L["Tidy Icons Tooltip"], dbKey = "TidyIcons"},
                 {type = "Checkbox", name = L["Dark Theme"], tooltip = L["Dark Theme Tooltip"], dbKey = "DarkTheme"},
                 {type = "Checkbox", name = L["Show XP Text"], tooltip = L["Show XP Text Tooltip"], cvar = "xpBarText"},
+            },
+        },
+
+        {
+            header = L["Enhancements"],
+            sideBySide = true,
+            widgets = {
                 {type = "Checkbox", name = L["Tooltip Show Self Aura Spell ID"], dbKey = "Tooltip_SelfAuraSpellID"},
                 {type = "Checkbox", name = L["Tooltip Show Target Aura Spell ID"], dbKey = "Tooltip_TargetAuraSpellID"},
+                {type = "Checkbox", name = L["PaperDoll Item Level"], dbKey = "PaperDoll_QualityBorder"},
+                {type = "Checkbox", name = L["PaperDoll Quality Color"], dbKey = "PaperDoll_ItemLevel"},
             },
         },
 

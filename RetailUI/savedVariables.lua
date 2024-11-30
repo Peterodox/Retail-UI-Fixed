@@ -19,6 +19,8 @@ local DefaultValues = {
 	Components_MicroAndBagsBackground = true,
 	Tooltip_SelfAuraSpellID = true,
 	Tooltip_TargetAuraSpellID = false,
+	PaperDoll_QualityBorder = true,
+	PaperDoll_ItemLevel = true,
 }
 
 local CustomCommand = {
@@ -66,6 +68,8 @@ local function SavedVariables_Load()
 	end
 
 	UpdateAllModules()
+
+	CallbackRegistry:Trigger("AddOnLoadingComplete", OptionDB)
 end
 
 local function LoadCustomCommand()
@@ -106,8 +110,8 @@ addon.ResetSettings = ResetSettings
 -- SavedVariables for that addon have been loaded from their file
 local function AddonLoaded(self, event, name)
 	if name == addonName then
-		SavedVariables_Init()
 		self:UnregisterEvent(event)
+		SavedVariables_Init()
 	end
 end
 local f = CreateFrame("Frame")
