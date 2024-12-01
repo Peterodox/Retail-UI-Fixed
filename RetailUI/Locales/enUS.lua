@@ -16,8 +16,10 @@ L["Show XP Text"] = "Experience Bar Text"
 L["Show XP Text Tooltip"] = "Always show the text on your experience bar."
 
 L["Enhancements"] = "Enhancements"
-L["Tooltip Show Self Aura Spell ID"] = "Own Aura's Spell ID on Tooltip"
-L["Tooltip Show Target Aura Spell ID"] = "Target's Aura's Spell ID on Tooltip"
+L["Tooltip Show Self Aura Spell ID"] = "Own Aura's Spell ID"
+L["Tooltip Show Self Aura Spell ID Tooltip"] = "Show the spell ID of your own buffs and debuffs on the tooltip."
+L["Tooltip Show Target Aura Spell ID"] = "Target's Aura's Spell ID"
+L["Tooltip Show Target Aura Spell ID Tooltip"] = "Show the spell ID of your target's buffs and debuffs on the tooltip."
 L["PaperDoll Item Level"] = "Charcter Panel: Item Level"
 L["PaperDoll Quality Color"] = "Charcter Panel: Quality Color"
 

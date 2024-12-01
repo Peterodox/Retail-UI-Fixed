@@ -1,7 +1,7 @@
 ## Interface: 11505
 ## Title: Retail UI
 ## Author: sebast_ian
-## Version: 3.0.5
+## Version: 3.0.6
 ## Notes: Provides a compact replacement action bars with many features.|n|cff959595Slash command: /rui|r
 ## SavedVariables: RUI_SavedVars
 
@@ -12,4 +12,4 @@ Embeds.xml
 
 RetailUI.lua
 
-Options\New_Settings.lua
+Options\SettingsPanel.xml

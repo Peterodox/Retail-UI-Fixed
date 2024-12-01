@@ -16,11 +16,7 @@ print(CreateAtlasMarkup(icon, 16, 16), welcomeMessage)
 
 SLASH_RUI1, SLASH_RUI2, SLASH_RUI3 = '/rui', '/retail', '/retailui'
 SlashCmdList["RUI"] = function()
-	if RUIOptionsFrame:IsShown() then
-		RUIOptionsFrame:Hide()
-	else
-		RUIOptionsFrame:Show()
-	end
+	RetailUISettingsPanel:OnSlashCommand()
 end
 
 
@@ -32,7 +28,7 @@ StaticPopupDialogs["Welcome_Popup"] = {
   text = "Welcome to Retail UI",
   button1 = "See options",
   OnAccept = function()
-  	RUIOptionsFrame:Show()
+	RetailUISettingsPanel:OnSlashCommand(true)
 	-- Sound: GAMEDIALOGOPEN
 	PlaySound(88)
   end,

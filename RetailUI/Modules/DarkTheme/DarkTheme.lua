@@ -87,7 +87,8 @@ end
 local function DarkTheme_Update()
 	MerchantBuyBackItemItemButtonNormalTexture:Hide()
 
-	if GetDBBool("DarkTheme") then
+	local useDarkTheme = GetDBBool("DarkTheme")
+	if useDarkTheme then
 		color = colorDark
 		desaturation = desaturationEnabled
 		-- Raid frame manager toggle button texture
@@ -118,6 +119,10 @@ local function DarkTheme_Update()
 	if GetBackpackFrame() ~= nil then
 		SetCustomBackpackTextures(GetBackpackFrame(), nil, 0)
 	end
+
+	if RetailUISettingsPanel then
+		RetailUISettingsPanel:SetDarkMode(useDarkTheme)
+	end
 end
 
 
@@ -131,14 +136,14 @@ local HookFunctions = {
 }
 
 for _, name in ipairs(HookOnShowObjects) do
-	local obj = _G[name];
+	local obj = _G[name]
 	if obj then
 		obj:HookScript("OnShow", DarkTheme_Update)
 	end
 end
 
 for _, name in ipairs(HookFunctions) do
-	local obj = _G[name];
+	local obj = _G[name]
 	if obj and type(obj) == "function" then
 		hooksecurefunc(name, DarkTheme_Update)
 	end

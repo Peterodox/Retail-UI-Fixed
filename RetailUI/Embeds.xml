@@ -16,9 +16,4 @@
   <Script file="Modules\TidyIcons.lua" />
   <Script file="Modules\Tooltip.lua"/>
   <Script file="Modules\PaperDoll.lua"/>
-
-  <!-- Options -->
-  <Include file="Options\OptionsFrame.xml" />
-  <Include file="Options\OptionsFramePanels.xml" />
-  <Include file="Options\Options.lua" />
 </Ui>
