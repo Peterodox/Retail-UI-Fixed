@@ -90,6 +90,7 @@ addon.CallbackRegistry:Register("AddOnLoadingComplete", Minimap_EnableScrollZoom
 
 --------------------==≡≡[ MICRO MENU ]≡≡==----------------------------------
 local LFGMicroButton
+local LGF_POSITION_INDEX = 3	--The 3rd one from the right
 
 local function ModifyLFGMinimapButton()
 	local f = LFGMinimapFrame
@@ -152,25 +153,50 @@ local function ModifyLFGMinimapButton()
 	end
 end
 
+local MICRO_BUTTONS = {
+	"CharacterMicroButton",
+	"SpellbookMicroButton",
+	"TalentMicroButton",
+	"QuestLogMicroButton",
+	"SocialsMicroButton",
+	"GuildMicroButton",
+	"WorldMapMicroButton",
+	"MainMenuMicroButton",
+	"HelpMicroButton",
+}
+
 local function Position_MicroMenuButtons()
 	local numVisible = 0
-	local lastMicroButton
+	local firstButton, lastButton
 
-	if MICRO_BUTTONS then
-		for _, name in ipairs(MICRO_BUTTONS) do
-			local microButton = _G[name]
-			if microButton and microButton:IsShown() then
-				numVisible = numVisible + 1
-				lastMicroButton = microButton
-			end
+	local microButtons = {}	--Button type
+
+	for i, name in ipairs(MICRO_BUTTONS) do
+		local microButton = _G[name]
+		if microButton and microButton:IsShown() then
+			numVisible = numVisible + 1
+			microButtons[numVisible] = microButton
 		end
 	end
 
 	local LFGButton = ModifyLFGMinimapButton()
-	if LFGButton and lastMicroButton then
+	if LFGButton then
 		numVisible = numVisible + 1
-		LFGButton:ClearAllPoints()
-		LFGButton:SetPoint("BOTTOMLEFT", lastMicroButton, "BOTTOMRIGHT", -3, 0)
+		local pos = numVisible + 1 - LGF_POSITION_INDEX
+		if pos < 1 then
+			pos = 1
+		end
+		table.insert(microButtons, pos, LFGButton)
+	end
+
+	for i, microButton in ipairs(microButtons) do
+		microButton:ClearAllPoints()
+		if i == 1 then
+			firstButton = microButton
+		else
+			microButton:SetPoint("BOTTOMLEFT", lastButton, "BOTTOMRIGHT", -3, 0)
+		end
+		lastButton = microButton
 	end
 
 	if GetDBBool("Components_MicroAndBagsBackground") then
@@ -187,8 +213,8 @@ local function Position_MicroMenuButtons()
 	local barWidth = microOffset + 30
 	container:SetWidth(barWidth)
 
-	CharacterMicroButton:ClearAllPoints()
-	CharacterMicroButton:SetPoint("BOTTOMRIGHT", container, "BOTTOMRIGHT", -microOffset, 3.5)
+	firstButton:ClearAllPoints()
+	firstButton:SetPoint("BOTTOMRIGHT", container, "BOTTOMRIGHT", -microOffset, 3.5)
 
 	-- Latency indicator
 	local f1 = MainMenuBarPerformanceBarFrame
