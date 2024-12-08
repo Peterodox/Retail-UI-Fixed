@@ -21,11 +21,13 @@ local DefaultValues = {
 	Tooltip_TargetAuraSpellID = false,
 	PaperDoll_QualityBorder = true,
 	PaperDoll_ItemLevel = true,
+	MicroMenu_WorldMap = true,
 }
 
 local CustomCommand = {
 	"XPBarTextScale",
 	"ChatFontSize",
+	"HotkeyColor",
 }
 
 local function UpdateAllModules()
@@ -148,6 +150,9 @@ do	--Custom Command
 			if not value then
 				value = 14
 			end
+			if value < 10 then
+				value = 10
+			end
 			local font = ChatFontNormal:GetFont()
 			ChatFontNormal:SetFont(font, value, "")
 
@@ -164,5 +169,17 @@ do	--Custom Command
 	RUI_ChatFontSize = function(value)
 		SetDBValue("ChatFontSize", value)
 		SetChatFontSize(value)
+	end
+
+
+	local function SetHotkeyColor(value)
+		local v = value or 0.6
+		LIGHTGRAY_FONT_COLOR:SetRGB(v, v, v)
+	end
+	CallbackRegistry:Register("Custom.HotkeyColor", SetHotkeyColor)
+
+	RUI_SetHotkeyColor = function(value)
+		SetDBValue("HotkeyColor", value)
+		SetHotkeyColor(value)
 	end
 end

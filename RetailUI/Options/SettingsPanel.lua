@@ -67,6 +67,7 @@ local Schematic = {
                     {type = "Checkbox", name = L["Bag Space Text"], dbKey = "Components_BagSpaceText"},
                 {type = "Checkbox", name = L["Micro Menu"], dbKey = "Components_MicroMenu"},
                 {type = "Checkbox", name = L["Micro Bags Background"], dbKey = "Components_MicroAndBagsBackground"},
+                {type = "Checkbox", name = L["World Map Micro Button"], tooltip = L["World Map Micro Button Tooltip"], dbKey = "MicroMenu_WorldMap"},
             },
         },
     },
@@ -346,7 +347,7 @@ function OptionContainer:Rebuild()
         end
     end
 
-    local n = #scheme.sectors - 1
+    local n = #scheme.sectors
     local maxRowHeight = 0
     while (self.Sectors[n] and self.Sectors[n].sideBySide) do
         if self.Sectors[n].height > maxRowHeight then

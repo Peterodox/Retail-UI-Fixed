@@ -38,6 +38,7 @@ L["Bags"] = "Bags"
 L["Bag Space Text"] = "Bag Space Text"
 L["Micro Menu"] = "Micro Menu"
 L["Micro Bags Background"] = "Micro and Bags Background"
-
+L["World Map Micro Button"] = "World Map Button";
+L["World Map Micro Button Tooltip"] = "Hide World Map micro menu button";
 
 L["Restore To Default"] = "Restore default options"

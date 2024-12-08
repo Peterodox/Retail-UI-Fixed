@@ -171,6 +171,14 @@ local function Position_MicroMenuButtons()
 
 	local microButtons = {}	--Button type
 
+	if WorldMapMicroButton then
+		if GetDBBool("MicroMenu_WorldMap") then
+			WorldMapMicroButton:Hide();
+		else
+			WorldMapMicroButton:Show();
+		end
+	end
+
 	for i, name in ipairs(MICRO_BUTTONS) do
 		local microButton = _G[name]
 		if microButton and microButton:IsShown() then
@@ -248,6 +256,7 @@ local function MicroAndBagsBackground_Update(value, userInput)
 	end
 end
 addon.CallbackRegistry:Register("SettingChanged.Components_MicroAndBagsBackground", MicroAndBagsBackground_Update)
+addon.CallbackRegistry:Register("SettingChanged.MicroMenu_WorldMap", MicroAndBagsBackground_Update)
 
 --------------------------------==≡≡[ BAG SPACE TEXT ]≡≡==--------------------------------
 
